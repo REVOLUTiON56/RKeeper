@@ -1,0 +1,43 @@
+version: '3'
+services:
+  merger_database:
+    image: mcr.microsoft.com/mssql/server
+    ports:
+      - 1434:1433
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Secret1234
+    volumes:
+      - ./drive:/var/opt/database/data
+  merger_server:
+    build:
+      context: .
+      dockerfile: API.Dockerfile
+    image: merger_server
+    ports:
+      - 5000:80
+    environment:
+      - ConnectionStrings:MSSQL=Server=merger_database;Database=trm;User Id=sa;Password=Secret1234;
+    volumes:
+      - ./TimeReportMerge/appsettings.json:/server/appsettings.json  
+    depends_on: 
+      - merger_database
+    restart: on-failure
+  merger_client:
+    build:
+      context: .
+      dockerfile: Client.Dockerfile
+    image: merger_client
+    ports:
+      - 44315:443
+      - 53859:80
+    environment:
+      ASPNETCORE_ENVIRONMENT: Development
+      ASPNETCORE_URLS: https://+;http://+
+      ASPNETCORE_Kestrel__Certificates__Default__Password: c2f45b01-14dd-4e7b-bc9b-c95393b814d6
+      ASPNETCORE_Kestrel__Certificates__Default__Path: /.aspnet/https/TimeReportMerge.Client.pfx
+      Server:Url: http://merger_server:80
+    volumes:
+      - ./TimeReportMerge.Client/appsettings.json:/client/appsettings.json
+    depends_on: 
+      - merger_server

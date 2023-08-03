@@ -1,0 +1,10 @@
+<Project>
+  <PropertyGroup>
+    <TargetFramework>net7.0</TargetFramework>
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <NoWarn>1591;1701;1702</NoWarn>
+  </PropertyGroup>
+</Project>
