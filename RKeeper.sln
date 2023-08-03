@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKeeper.Core", "RKeeper.Cor
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RKeeper.Infrastructure", "RKeeper.Infrastructure\RKeeper.Infrastructure.csproj", "{7C0B4780-A618-4BC5-B5F1-F37A8BEEB05C}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RKeeper.Identity", "RKeeper.Identity\RKeeper.Identity.csproj", "{0DC6EA56-19C0-4A33-862D-BC4ABD980636}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{7C0B4780-A618-4BC5-B5F1-F37A8BEEB05C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7C0B4780-A618-4BC5-B5F1-F37A8BEEB05C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7C0B4780-A618-4BC5-B5F1-F37A8BEEB05C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0DC6EA56-19C0-4A33-862D-BC4ABD980636}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0DC6EA56-19C0-4A33-862D-BC4ABD980636}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0DC6EA56-19C0-4A33-862D-BC4ABD980636}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0DC6EA56-19C0-4A33-862D-BC4ABD980636}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
