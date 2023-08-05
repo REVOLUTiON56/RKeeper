@@ -9,6 +9,7 @@ public static class IdentityExtensions
 {
     public static void AddRKeeperIdentityContext(this WebApplicationBuilder builder) {
         var connectionString = builder.Configuration.GetConnectionString(RKeeperIdentityDbContext.ConfigurationName) ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
+
         builder.Services.AddDbContext<RKeeperIdentityDbContext>(options => {
             options.UseNpgsql(connectionString);
         });

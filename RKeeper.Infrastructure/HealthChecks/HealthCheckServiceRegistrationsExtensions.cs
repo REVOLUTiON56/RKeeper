@@ -7,7 +7,7 @@ using Npgsql;
 
 namespace RKeeper.Infrastructure.HealthChecks;
 
-public static class HealthCheckServiceRegistrationsExtensions
+public static class MonitoringServiceRegistrationsExtensions
 {
     const string HealthCheckQuery = "SELECT 1;";
     const string DefaultPSqlHealthCheckName = "postgres";
@@ -24,7 +24,7 @@ public static class HealthCheckServiceRegistrationsExtensions
     }
 
     /// <summary>
-    /// Добавить хелфчек для БД Postgres по ключу для секции ConnectionStrings
+    /// Add postgres database health check from connection string section
     /// </summary>
     /// <param name="builder">A builder used to register health checks</param>
     /// <param name="connectionStringConfigurationKey">The key with connection string in the Configuration::ConnectionStrings section</param>
@@ -36,7 +36,7 @@ public static class HealthCheckServiceRegistrationsExtensions
     }
 
     /// <summary>
-    /// Добавить хелфчек для БД Postgres
+    /// Add postgres database health check from connection string section
     /// </summary>
     /// <param name="builder">A builder used to register health checks</param>
     /// <param name="connectionString">Database connection string</param>
@@ -48,7 +48,7 @@ public static class HealthCheckServiceRegistrationsExtensions
     }
 
     /// <summary>
-    /// Добавить хелфчек для БД Postgres
+    /// Add postgres database health check from connection string section
     /// </summary>
     /// <param name="builder">A builder used to register health checks</param>
     /// <param name="getConnectionString">Function to get database connection string from IConfiguration</param>
@@ -98,5 +98,4 @@ public static class HealthCheckServiceRegistrationsExtensions
 
         return new NpgSqlHealthCheck(options);
     }
-
 }
