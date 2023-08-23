@@ -7,17 +7,17 @@ using Npgsql;
 
 namespace RKeeper.Infrastructure.HealthChecks;
 
-public static class MonitoringServiceRegistrationsExtensions
+public static class HealthCheckServiceRegistrationsExtensions
 {
     const string HealthCheckQuery = "SELECT 1;";
     const string DefaultPSqlHealthCheckName = "postgres";
 
-    public static void AddCommonHealthChecks(this WebApplicationBuilder builder, Action<IHealthChecksBuilder>? builderAction = null)
+    public static void AddRKeeperHealthChecks(this WebApplicationBuilder builder, Action<IHealthChecksBuilder>? builderAction = null)
     {
-        builder.Services.AddCommonHealthChecks(builderAction);
+        builder.Services.AddRKeeperHealthChecks(builderAction);
     }
 
-    public static void AddCommonHealthChecks(this IServiceCollection services, Action<IHealthChecksBuilder>? builderAction = null)
+    public static void AddRKeeperHealthChecks(this IServiceCollection services, Action<IHealthChecksBuilder>? builderAction = null)
     {
         var builder = services.AddHealthChecks();
         builderAction?.Invoke(builder);

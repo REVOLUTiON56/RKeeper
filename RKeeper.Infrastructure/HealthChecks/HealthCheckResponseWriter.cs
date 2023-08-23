@@ -1,6 +1,7 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
+using RKeeper.Core;
 
 namespace RKeeper.Infrastructure.HealthChecks;
 
@@ -13,7 +14,7 @@ public static class HealthCheckResponseWriter
 
     public static Task WriteResponse(HttpContext context, HealthReport result)
     {
-        context.Response.ContentType = "application/json; charset=utf-8";
+        context.Response.ContentType = MimeTypes.JsonUtf8;
 
         var status = result.Status.ToString().ToUpperInvariant();
         var criticalDependencies = result.Entries.ToDictionary(

@@ -1,9 +1,9 @@
 namespace RKeeper.Infrastructure.HealthChecks;
 public static class HealthCheckPathConstants
 {
-    public const string ReadinessPath = "/healthz/ready";
-    public const string LivenessPath = "/healthz";
-    public const string StartupPath = "/healthz/startup";
+    public const string ReadinessPath = "/health/ready";
+    public const string LivenessPath = "/health";
+    public const string StartupPath = "/health/startup";
 }
 
 public static class HealthCheckStatusConstants

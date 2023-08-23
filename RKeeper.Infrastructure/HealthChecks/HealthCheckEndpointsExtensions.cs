@@ -23,16 +23,16 @@ public static class HealthCheckEndpointsExtensions
             pattern,
             GetDefaultOptions(HealthCheckTagConstants.StartupHealthCheckTag));
 
-    public static IEndpointRouteBuilder MapCommonHealthChecks(
+    public static IEndpointRouteBuilder MapRKeeperHealthChecks(
         this IEndpointRouteBuilder endpoints)
     {
-        return endpoints.MapCommonHealthChecks(_ => { });
+        return endpoints.MapRKeeperHealthChecks(_ => { });
     }
 
-    public static IEndpointRouteBuilder MapCommonHealthChecks(this IEndpointRouteBuilder endpoints, string[]? hosts, Action<HealthCheckPathsOptions>? configure = null)
+    public static IEndpointRouteBuilder MapRKeeperHealthChecks(this IEndpointRouteBuilder endpoints, string[]? hosts, Action<HealthCheckPathsOptions>? configure = null)
     {
         var requiredHosts = hosts ?? Array.Empty<string>();
-        endpoints.MapCommonHealthChecks(
+        endpoints.MapRKeeperHealthChecks(
             configure,
             startup => startup.RequireHost(requiredHosts),
             liveness => liveness.RequireHost(requiredHosts),
@@ -42,7 +42,7 @@ public static class HealthCheckEndpointsExtensions
         return endpoints;
     }
 
-    public static IEndpointRouteBuilder MapCommonHealthChecks(
+    public static IEndpointRouteBuilder MapRKeeperHealthChecks(
         this IEndpointRouteBuilder endpoints,
         Action<HealthCheckPathsOptions>? configure,
         Action<IEndpointConventionBuilder>? startupOptions = null,
