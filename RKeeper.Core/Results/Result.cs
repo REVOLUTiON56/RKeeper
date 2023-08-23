@@ -43,12 +43,12 @@ public readonly struct Result
 
         if (result1.IsFailure)
         {
-            errors.AddRange(result1.Errors);
+            errors.AddRange(result1.Errors!);
         }
 
         if (result2.IsFailure)
         {
-            errors.AddRange(result2.Errors);
+            errors.AddRange(result2.Errors!);
         }
 
         return errors.Count > 0
@@ -78,8 +78,7 @@ public readonly struct Result
             return;
         }
 
-        string error = Errors.FirstOrDefault()?.Message ?? "Invalid operation";
-
+        string error = Errors?.FirstOrDefault()?.Message ?? "Invalid operation";
         throw new InvalidOperationException(error);
     }
 }
@@ -107,7 +106,7 @@ public readonly struct Result<T>
             return;
         }
 
-        string error = Errors.FirstOrDefault()?.Message ?? "Invalid operation";
+        string error = Errors?.FirstOrDefault()?.Message ?? "Invalid operation";
 
         throw new InvalidOperationException(error);
     }
