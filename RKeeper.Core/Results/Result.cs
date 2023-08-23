@@ -12,14 +12,14 @@ namespace RKeeper.Core.Results;
  * -------------------------------------------------------------------------------- */
 public readonly struct Result
 {
-    private readonly ResultCommonLogic _commonLogic;
-    public bool IsSuccess => _commonLogic.IsSuccess;
-    public bool IsFailure => _commonLogic.IsFailure;
-    public IReadOnlyCollection<IError> Errors => _commonLogic.Errors;
+    public bool IsSuccess => IsFailure == false;
+    public bool IsFailure { get; }
+    public IReadOnlyCollection<IError>? Errors { get; }
 
     internal Result(bool isFailure, IEnumerable<IError>? errors)
     {
-        _commonLogic = new ResultCommonLogic(isFailure, errors);
+        IsFailure = isFailure;
+        Errors = errors?.ToArray();
     }
 
     public static Result Ok()
@@ -86,29 +86,18 @@ public readonly struct Result
 
 public readonly struct Result<T>
 {
+    public bool IsSuccess => IsFailure == false;
+    public bool IsFailure { get; }
+    public IReadOnlyCollection<IError>? Errors { get; }
+
     private readonly T? _value;
-    private readonly ResultCommonLogic _commonLogic;
-    public bool IsSuccess => _commonLogic.IsSuccess;
-    public bool IsFailure => _commonLogic.IsFailure;
-    public IReadOnlyCollection<IError> Errors => _commonLogic.Errors;
+    public T? Value => IsSuccess ? _value : throw new InvalidOperationException("no value for failure result");
 
     internal Result(bool isFailure, T? value, IEnumerable<IError>? errors)
     {
-        _commonLogic = new ResultCommonLogic(isFailure, errors);
+        IsFailure = isFailure;
+        Errors = errors?.ToArray();
         _value = value;
-    }
-
-    public T? Value
-    {
-        get
-        {
-            if (IsFailure)
-            {
-                throw new InvalidOperationException("no value for failure result");
-            }
-
-            return _value;
-        }
     }
 
     public void ThrowIfFailure()
@@ -127,4 +116,16 @@ public readonly struct Result<T>
     {
         return new Result(IsFailure, Errors);
     }
+
+    public Result<TR> As<TR>()
+    {
+        return new Result<TR>(IsFailure, default, Errors);
+    }
+
+    public static implicit operator Result(Result<T> result)
+    {
+        return result.ToResult();
+    }
+
+    public static implicit operator Result<T>(T value) => Result.Ok(value);
 }
