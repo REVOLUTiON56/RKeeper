@@ -3,6 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using RKeeper.Infrastructure.HealthChecks;
 using RKeeper.Infrastructure.Monitoring;
+using RKeeper.Infrastructure.RateLimiting;
 
 namespace RKeeper.Api;
 
@@ -12,8 +13,9 @@ public static class Startup
     {
         builder.Services.AddControllers();
 
-        builder.AddMonitoringServices();
-        builder.AddCommonHealthChecks();
+        builder.AddRKeeperMonitoring();
+        builder.AddRKeeperHealthChecks();
+        builder.AddRKeeperRateLimiting();
 
         builder.Services.AddSwaggerGen();
     }
@@ -30,7 +32,9 @@ public static class Startup
         app.UseRouting();
         app.UseAuthorization();
 
-        app.MapCommonHealthChecks();
+        app.UseRKeeperRateLimiting();
+
+        app.MapRKeeperHealthChecks();
         app.MapControllers();
     }
 }
