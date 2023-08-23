@@ -13,20 +13,20 @@ namespace RKeeper.Infrastructure.Monitoring;
 
 public static class MonitoringServiceRegistrationsExtensions
 {
-    public static WebApplicationBuilder AddMonitoringServices(this WebApplicationBuilder builder, Action<MonitoringOptions>? configureOptions = null)
+    public static WebApplicationBuilder AddRKeeperMonitoring(this WebApplicationBuilder builder, Action<MonitoringOptions>? configureOptions = null)
     {
-        AddCoreMonitoringServices(builder.Services, builder.Configuration, configureOptions);
+        AddRKeeperMonitoringCore(builder.Services, builder.Configuration, configureOptions);
         return builder;
     }
 
-    public static IServiceCollection AddMonitoringServices(this IServiceCollection services, IConfiguration configuration, Action<MonitoringOptions>? configureOptions = null)
+    public static IServiceCollection AddRKeeperMonitoring(this IServiceCollection services, IConfiguration configuration, Action<MonitoringOptions>? configureOptions = null)
     {
-        AddCoreMonitoringServices(services, configuration, configureOptions);
+        AddRKeeperMonitoringCore(services, configuration, configureOptions);
         return services;
     }
 
 
-    private static void AddCoreMonitoringServices(IServiceCollection services, IConfiguration configuration, Action<MonitoringOptions>? configureOptions = null)
+    private static void AddRKeeperMonitoringCore(IServiceCollection services, IConfiguration configuration, Action<MonitoringOptions>? configureOptions = null)
     {
         var monitoringConfigurationSection = configuration.GetSection(MonitoringOptions.SectionName);
 

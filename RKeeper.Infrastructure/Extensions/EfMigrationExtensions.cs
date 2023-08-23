@@ -11,16 +11,13 @@ public static class EfMigrationExtensions
     /// Apply migrations for specified context
     /// <para>will be ignored if environment variable DONT_RUN_MIGRATIONS = true</para>
     /// </summary>
-    public static async Task MigrateContextAsync<TContext>(this IApplicationBuilder app) where TContext : DbContext
+    public static async Task MigrateContextAsync<TContext>(this IApplicationBuilder app, CancellationToken cancellationToken = default) where TContext : DbContext
     {
         using var serviceScope = app.ApplicationServices.GetRequiredService<IServiceScopeFactory>().CreateScope();
         var logger = serviceScope.ServiceProvider.GetRequiredService<ILogger<TContext>>();
         if (Environment.GetEnvironmentVariable("DONT_RUN_MIGRATIONS")?.Any() == true)
         {
-            app.ApplicationServices
-                .GetRequiredService<ILogger<TContext>>()
-                .LogWarning("Migrations of {Context} skipped due to 'DONT_RUN_MIGRATIONS' environment variable", typeof(TContext));
-
+            logger.LogWarning("Migrations of {Context} skipped due to 'DONT_RUN_MIGRATIONS' environment variable", typeof(TContext));
             return;
         }
 
@@ -28,13 +25,13 @@ public static class EfMigrationExtensions
 
         try
         {
-            await context.Database.MigrateAsync().ConfigureAwait(false);
+            await context.Database.EnsureCreatedAsync(cancellationToken).ConfigureAwait(false);
+            await context.Database.MigrateAsync(cancellationToken).ConfigureAwait(false);
         }
         catch (Exception ex)
         {
-            Console.WriteLine(ex.Message);
             logger.LogError(ex, "An error occurred");
-            Environment.Exit(-1);
+            throw;
         }
     }
 }
